@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     if (location?.latitude && location?.longitude) {
       writeLocation();
-      console.log('thiss  location', location);
     }
   }, [location]);
 
