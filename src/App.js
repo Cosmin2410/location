@@ -66,7 +66,7 @@ function App() {
           }}
         >
           {location.latitude && location.longitude ? (
-            <div>
+            <>
               {meme && !loading ? (
                 <img
                   src={meme.url}
@@ -87,7 +87,7 @@ function App() {
                   data-testid='loader'
                 />
               )}
-            </div>
+            </>
           ) : (
             <p>Accept location</p>
           )}
