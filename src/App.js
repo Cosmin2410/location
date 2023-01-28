@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((loc) => {
-      console.log('thiss  loc', loc);
+      console.log('thiss  loc', loc.permission);
       setPermission(loc.permission);
       setLocation({
         latitude: loc.coords.latitude,
@@ -92,7 +92,7 @@ function App() {
               )}
             </div>
           ) : (
-            <p>exit website, enter again and accept location</p>
+            <p>Accept location</p>
           )}
           <button
             onClick={handleClick}
