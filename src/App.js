@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { db } from './firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
 
 function App() {
   const [location, setLocation] = useState({});
+  const [meme, setMeme] = useState(null);
+
   const userCollectionRef = collection(db, 'location');
 
   const writeLocation = async () => {
@@ -31,25 +32,43 @@ function App() {
     }
   }, [location]);
 
+  useEffect(() => {
+    const fetchMeme = async () => {
+      const response = await fetch('https://meme-api.com/gimme');
+      const data = await response.json();
+      setMeme(data);
+    };
+    fetchMeme();
+  }, []);
+
+  const handleClick = async () => {
+    const response = await fetch('https://meme-api.com/gimme');
+    const data = await response.json();
+    setMeme(data);
+  };
+
   return (
     <div className='App'>
       <header className='App-header'>
-        <img
-          src={logo}
-          className='App-logo'
-          alt='logo'
-        />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+        <div>
+          {meme && (
+            <img
+              src={meme.url}
+              alt={meme.name}
+              style={{
+                width: '300px',
+                maxHeight: '500px',
+                borderRadius: '5px',
+              }}
+            />
+          )}
+          <button
+            onClick={handleClick}
+            className={'generate-button'}
+          >
+            Generate Meme
+          </button>
+        </div>
       </header>
     </div>
   );
