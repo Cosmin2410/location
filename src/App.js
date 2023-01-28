@@ -8,7 +8,6 @@ function App() {
   const [location, setLocation] = useState({});
   const [meme, setMeme] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [permission, setPermission] = useState('denied');
 
   const userCollectionRef = collection(db, 'location');
 
@@ -24,8 +23,6 @@ function App() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((loc) => {
-      console.log('thiss  loc', loc.permission);
-      setPermission(loc.permission);
       setLocation({
         latitude: loc.coords.latitude,
         longitude: loc.coords.longitude,
@@ -68,7 +65,7 @@ function App() {
             position: 'relative',
           }}
         >
-          {permission === 'granted' ? (
+          {location.latitude && location.longitude ? (
             <div>
               {meme && !loading ? (
                 <img
